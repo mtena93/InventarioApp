@@ -1,6 +1,9 @@
-﻿namespace InventarioApp
+﻿using System;
+using System.Windows.Forms;
+
+namespace InventarioApp
 {
-    partial class Form1
+    public partial class Form1 : Form
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -19,7 +22,20 @@
             }
             base.Dispose(disposing);
         }
-
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Conexion con = new Conexion();
+            try
+            {
+                con.Abrir();
+                MessageBox.Show("Conexión exitosa a MySQL");
+                con.Cerrar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de conexión: " + ex.Message);
+            }
+        }
         #region Código generado por el Diseñador de Windows Forms
 
         /// <summary>
@@ -31,6 +47,7 @@
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.Text = "Form1";
         }
 
