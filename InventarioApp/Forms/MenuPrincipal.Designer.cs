@@ -62,6 +62,7 @@
             this.btnCategorias.TabIndex = 2;
             this.btnCategorias.Text = "Gestionar Categorias";
             this.btnCategorias.UseVisualStyleBackColor = true;
+            this.btnCategorias.Click += new System.EventHandler(this.btnCategorias_Click);
             // 
             // btnStock
             // 
@@ -71,6 +72,7 @@
             this.btnStock.TabIndex = 3;
             this.btnStock.Text = "Movimientos de Stock";
             this.btnStock.UseVisualStyleBackColor = true;
+            this.btnStock.Click += new System.EventHandler(this.btnStock_Click);
             // 
             // btnSalir
             // 

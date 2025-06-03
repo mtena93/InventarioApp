@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventarioApp.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,6 +27,18 @@ namespace InventarioApp
         {
             ProductosForm productosForm = new ProductosForm();
             productosForm.ShowDialog(); // para que se abra como ventana modal
+        }
+
+        private void btnStock_Click(object sender, EventArgs e)
+        {
+            MovimientosForm form = new MovimientosForm();
+            form.ShowDialog();
+        }
+
+        private void btnCategorias_Click(object sender, EventArgs e)
+        {
+            CategoriasForm form = new CategoriasForm();
+            form.ShowDialog();
         }
     }
 }
