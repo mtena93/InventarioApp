@@ -20,6 +20,7 @@ namespace InventarioApp
             tipoUsuario = tipo;
             CargarProductos();
             AplicarPermisos();
+            dgvProductos.CellFormatting += dgvProductos_CellFormatting;
         }
 
         private void AplicarPermisos()
@@ -43,6 +44,9 @@ namespace InventarioApp
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dgvProductos.DataSource = dt;
+                dgvProductos.Columns["id"].Visible = false;
+                dgvProductos.Columns["precio"].DefaultCellStyle.Format = "0.00 €";
+                dgvProductos.Columns["nombre"].DefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold); // Nombre en negrita
                 con.Cerrar();
             }
             catch (Exception ex)
@@ -111,6 +115,22 @@ namespace InventarioApp
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close(); // Vuelve al formulario anterior
+        }
+
+        private void dgvProductos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvProductos.Columns[e.ColumnIndex].Name == "cantidad" && e.Value != null)
+            {
+                int cantidad = Convert.ToInt32(e.Value);
+                if (cantidad > 0)
+                {
+                    e.CellStyle.ForeColor = Color.Green;
+                }
+                else
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                }
+            }
         }
     }
 }

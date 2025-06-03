@@ -37,6 +37,11 @@
             this.btnRegistrar = new System.Windows.Forms.Button();
             this.dgvMovimientos = new System.Windows.Forms.DataGridView();
             this.btnCerrar = new System.Windows.Forms.Button();
+            this.cmbFiltroProducto = new System.Windows.Forms.ComboBox();
+            this.cmbFiltroTipo = new System.Windows.Forms.ComboBox();
+            this.txtFiltroCantidad = new System.Windows.Forms.TextBox();
+            this.txtFiltroFecha = new System.Windows.Forms.TextBox();
+            this.lblFiltros = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovimientos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,11 +124,55 @@
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
+            // cmbFiltroProducto
+            // 
+            this.cmbFiltroProducto.FormattingEnabled = true;
+            this.cmbFiltroProducto.Location = new System.Drawing.Point(413, 58);
+            this.cmbFiltroProducto.Name = "cmbFiltroProducto";
+            this.cmbFiltroProducto.Size = new System.Drawing.Size(121, 21);
+            this.cmbFiltroProducto.TabIndex = 9;
+            // 
+            // cmbFiltroTipo
+            // 
+            this.cmbFiltroTipo.FormattingEnabled = true;
+            this.cmbFiltroTipo.Location = new System.Drawing.Point(540, 58);
+            this.cmbFiltroTipo.Name = "cmbFiltroTipo";
+            this.cmbFiltroTipo.Size = new System.Drawing.Size(76, 21);
+            this.cmbFiltroTipo.TabIndex = 10;
+            // 
+            // txtFiltroCantidad
+            // 
+            this.txtFiltroCantidad.Location = new System.Drawing.Point(622, 58);
+            this.txtFiltroCantidad.Name = "txtFiltroCantidad";
+            this.txtFiltroCantidad.Size = new System.Drawing.Size(53, 20);
+            this.txtFiltroCantidad.TabIndex = 11;
+            // 
+            // txtFiltroFecha
+            // 
+            this.txtFiltroFecha.Location = new System.Drawing.Point(681, 58);
+            this.txtFiltroFecha.Name = "txtFiltroFecha";
+            this.txtFiltroFecha.Size = new System.Drawing.Size(75, 20);
+            this.txtFiltroFecha.TabIndex = 12;
+            // 
+            // lblFiltros
+            // 
+            this.lblFiltros.AutoSize = true;
+            this.lblFiltros.Location = new System.Drawing.Point(360, 61);
+            this.lblFiltros.Name = "lblFiltros";
+            this.lblFiltros.Size = new System.Drawing.Size(34, 13);
+            this.lblFiltros.TabIndex = 13;
+            this.lblFiltros.Text = "Filtros";
+            // 
             // MovimientosForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblFiltros);
+            this.Controls.Add(this.txtFiltroFecha);
+            this.Controls.Add(this.txtFiltroCantidad);
+            this.Controls.Add(this.cmbFiltroTipo);
+            this.Controls.Add(this.cmbFiltroProducto);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.dgvMovimientos);
             this.Controls.Add(this.btnRegistrar);
@@ -152,5 +201,10 @@
         private System.Windows.Forms.Button btnRegistrar;
         private System.Windows.Forms.DataGridView dgvMovimientos;
         private System.Windows.Forms.Button btnCerrar;
+        private System.Windows.Forms.ComboBox cmbFiltroProducto;
+        private System.Windows.Forms.ComboBox cmbFiltroTipo;
+        private System.Windows.Forms.TextBox txtFiltroCantidad;
+        private System.Windows.Forms.TextBox txtFiltroFecha;
+        private System.Windows.Forms.Label lblFiltros;
     }
 }

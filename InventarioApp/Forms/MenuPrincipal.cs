@@ -25,7 +25,7 @@ namespace InventarioApp
         {
             if (tipoUsuario == "usuario")
             {
-                
+                btnCrearUsuario.Visible = false;
             }
 
             this.Text += $" - Rol: {tipoUsuario}";
@@ -51,6 +51,12 @@ namespace InventarioApp
         private void btnCategorias_Click(object sender, EventArgs e)
         {
             CategoriasForm form = new CategoriasForm(tipoUsuario);
+            form.ShowDialog();
+        }
+
+        private void btnCrearUsuario_Click(object sender, EventArgs e)
+        {
+            CrearUsuarioForm form = new CrearUsuarioForm();
             form.ShowDialog();
         }
     }

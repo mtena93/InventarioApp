@@ -33,6 +33,7 @@
             this.btnCategorias = new System.Windows.Forms.Button();
             this.btnStock = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.btnCrearUsuario = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblBienvenida
@@ -85,11 +86,23 @@
             this.btnSalir.UseVisualStyleBackColor = false;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // btnCrearUsuario
+            // 
+            this.btnCrearUsuario.BackColor = System.Drawing.Color.Lime;
+            this.btnCrearUsuario.Location = new System.Drawing.Point(37, 31);
+            this.btnCrearUsuario.Name = "btnCrearUsuario";
+            this.btnCrearUsuario.Size = new System.Drawing.Size(104, 23);
+            this.btnCrearUsuario.TabIndex = 5;
+            this.btnCrearUsuario.Text = "Crear Usuario";
+            this.btnCrearUsuario.UseVisualStyleBackColor = false;
+            this.btnCrearUsuario.Click += new System.EventHandler(this.btnCrearUsuario_Click);
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCrearUsuario);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnStock);
             this.Controls.Add(this.btnCategorias);
@@ -109,5 +122,6 @@
         private System.Windows.Forms.Button btnCategorias;
         private System.Windows.Forms.Button btnStock;
         private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.Button btnCrearUsuario;
     }
 }

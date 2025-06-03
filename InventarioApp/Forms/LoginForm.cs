@@ -36,10 +36,12 @@ namespace InventarioApp
             {
                 con.Abrir();
 
+                string hash = Seguridad.EncriptarSHA256(contraseña);
+
                 string query = "SELECT * FROM usuarios WHERE nombre_usuario = @usuario AND contraseña = @contraseña";
                 MySqlCommand cmd = new MySqlCommand(query, con.Abrir());
+                cmd.Parameters.AddWithValue("@contraseña", hash);
                 cmd.Parameters.AddWithValue("@usuario", usuario);
-                cmd.Parameters.AddWithValue("@contraseña", contraseña);
 
                 MySqlDataReader reader = cmd.ExecuteReader();
 

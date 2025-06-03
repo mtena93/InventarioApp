@@ -14,15 +14,20 @@ namespace InventarioApp.Forms
     public partial class MovimientosForm : Form
     {
         private string tipoUsuario;
+        private DataTable movimientosData;
         public MovimientosForm(string tipo)
         {
             InitializeComponent();
             tipoUsuario = tipo;
             CargarProductos();
-            cmbTipo.Items.AddRange(new string[] { "Entrada", "Salida" });
+            cmbTipo.Items.AddRange(new string[] { "entrada", "salida" });
             cmbTipo.SelectedIndex = 0;
             CargarHistorial();
             AplicarPermisos();
+            cmbFiltroProducto.SelectedIndexChanged += (s, e) => AplicarFiltro();
+            cmbFiltroTipo.SelectedIndexChanged += (s, e) => AplicarFiltro();
+            txtFiltroCantidad.TextChanged += (s, e) => AplicarFiltro();
+            txtFiltroFecha.TextChanged += (s, e) => AplicarFiltro();
         }
 
 
@@ -70,9 +75,10 @@ namespace InventarioApp.Forms
             ORDER BY m.fecha DESC";
 
                 MySqlDataAdapter da = new MySqlDataAdapter(query, con.Abrir());
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                dgvMovimientos.DataSource = dt;
+                movimientosData = new DataTable(); // 👈 global
+                da.Fill(movimientosData);
+                dgvMovimientos.DataSource = movimientosData;
+                LlenarFiltros();
 
                 con.Cerrar();
             }
@@ -82,7 +88,57 @@ namespace InventarioApp.Forms
             }
         }
 
-            private void btnRegistrar_Click(object sender, EventArgs e)
+
+        private void AplicarFiltro()
+        {
+            if (movimientosData == null) return;
+
+            string filtro = "";
+
+            if (cmbFiltroProducto.SelectedItem != null && cmbFiltroProducto.SelectedItem.ToString() != "")
+                filtro += $"producto = '{cmbFiltroProducto.SelectedItem}' AND ";
+
+            if (cmbFiltroTipo.SelectedItem != null && cmbFiltroTipo.SelectedItem.ToString() != "")
+                filtro += $"tipo = '{cmbFiltroTipo.SelectedItem}' AND ";
+
+            if (!string.IsNullOrWhiteSpace(txtFiltroCantidad.Text))
+                filtro += $"CONVERT(cantidad, 'System.String') LIKE '%{txtFiltroCantidad.Text}%' AND ";
+
+            if (!string.IsNullOrWhiteSpace(txtFiltroFecha.Text))
+                filtro += $"CONVERT(fecha, 'System.String') LIKE '%{txtFiltroFecha.Text}%' AND ";
+
+            if (filtro.EndsWith(" AND "))
+                filtro = filtro.Substring(0, filtro.Length - 5);
+
+            movimientosData.DefaultView.RowFilter = filtro;
+        }
+
+        private void LlenarFiltros()
+        {
+            // Limpiar primero
+            cmbFiltroProducto.Items.Clear();
+            cmbFiltroTipo.Items.Clear();
+
+            // Producto
+            var productos = movimientosData.AsEnumerable()
+                .Select(r => r.Field<string>("producto"))
+                .Distinct()
+                .OrderBy(n => n);
+
+            foreach (var p in productos)
+                cmbFiltroProducto.Items.Add(p);
+
+            cmbFiltroProducto.Items.Insert(0, ""); // opción vacía (sin filtro)
+            cmbFiltroProducto.SelectedIndex = 0;
+
+            // Tipo
+            cmbFiltroTipo.Items.Add(""); // sin filtro
+            cmbFiltroTipo.Items.Add("entrada");
+            cmbFiltroTipo.Items.Add("salida");
+            cmbFiltroTipo.SelectedIndex = 0;
+        }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
         {
             if (cmbProducto.SelectedValue == null || cmbTipo.SelectedItem == null)
             {
@@ -105,25 +161,48 @@ namespace InventarioApp.Forms
             {
                 con.Abrir();
 
-                // 1. Registrar movimiento
-                string query = "INSERT INTO movimientos_stock (producto_id, tipo, cantidad) VALUES (@producto_id, @tipo, @cantidad)";
-                MySqlCommand cmd = new MySqlCommand(query, con.Abrir());
-                cmd.Parameters.AddWithValue("@producto_id", productoId);
-                cmd.Parameters.AddWithValue("@tipo", tipo);
-                cmd.Parameters.AddWithValue("@cantidad", cantidad);
-                cmd.ExecuteNonQuery();
+                // 1. Consultar el stock actual
+                string stockQuery = "SELECT cantidad FROM productos WHERE id = @id";
+                MySqlCommand cmdStock = new MySqlCommand(stockQuery, con.Abrir());
+                cmdStock.Parameters.AddWithValue("@id", productoId);
+                int stockActual = Convert.ToInt32(cmdStock.ExecuteScalar());
 
-                // 2. Actualizar stock en productos
-                string operacion = (tipo == "entrada") ? "+" : "-";
-                string update = $"UPDATE productos SET cantidad = cantidad {operacion} @cantidad WHERE id = @id";
-                MySqlCommand cmd2 = new MySqlCommand(update, con.Abrir());
-                cmd2.Parameters.AddWithValue("@cantidad", cantidad);
-                cmd2.Parameters.AddWithValue("@id", productoId);
-                cmd2.ExecuteNonQuery();
+                if (tipo == "salida" && stockActual == 0)
+                {
+                    MessageBox.Show($"No hay suficiente stock. El stock es 0");
+                    con.Cerrar();
+                    return;
+                }
+
+                // 2. Validar si hay stock suficiente para salida
+                if (tipo == "salida" && cantidad > stockActual)
+                {
+                    MessageBox.Show($"No hay suficiente stock. Solo hay {stockActual} unidades disponibles.");
+                    con.Cerrar();
+                    return;
+                }
+
+                // 3. Registrar el movimiento
+                string movimientoQuery = "INSERT INTO movimientos_stock (producto_id, tipo, cantidad) VALUES (@producto_id, @tipo, @cantidad)";
+                MySqlCommand cmdMovimiento = new MySqlCommand(movimientoQuery, con.Abrir());
+                cmdMovimiento.Parameters.AddWithValue("@producto_id", productoId);
+                cmdMovimiento.Parameters.AddWithValue("@tipo", tipo);
+                cmdMovimiento.Parameters.AddWithValue("@cantidad", cantidad);
+                cmdMovimiento.ExecuteNonQuery();
+
+                // 4. Actualizar el stock
+                string updateQuery = tipo == "entrada"
+                    ? "UPDATE productos SET cantidad = cantidad + @cantidad WHERE id = @id"
+                    : "UPDATE productos SET cantidad = cantidad - @cantidad WHERE id = @id";
+
+                MySqlCommand cmdUpdate = new MySqlCommand(updateQuery, con.Abrir());
+                cmdUpdate.Parameters.AddWithValue("@cantidad", cantidad);
+                cmdUpdate.Parameters.AddWithValue("@id", productoId);
+                cmdUpdate.ExecuteNonQuery();
 
                 con.Cerrar();
 
-                MessageBox.Show("Movimiento registrado.");
+                MessageBox.Show("Movimiento registrado correctamente.");
                 CargarHistorial();
             }
             catch (Exception ex)
@@ -137,5 +216,5 @@ namespace InventarioApp.Forms
             this.Close(); // Vuelve al formulario anterior
         }
     }
-}
+   }
 
