@@ -13,10 +13,24 @@ namespace InventarioApp.Forms
 {
     public partial class CategoriasForm : Form
     {
-        public CategoriasForm()
+        private string tipoUsuario;
+        public CategoriasForm(string tipo)
         {
             InitializeComponent();
+            tipoUsuario = tipo;
             CargarCategorias();
+            AplicarPermisos();
+        }
+
+        private void AplicarPermisos()
+        {
+            if (tipoUsuario == "usuario")
+            {
+                txtNombreCategoria.Enabled = false;
+                btnAgregar.Enabled = false;
+                btnEditar.Enabled = false;
+                btnEliminar.Enabled = false;
+            }
         }
 
         private void CargarCategorias()

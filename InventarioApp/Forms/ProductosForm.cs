@@ -13,10 +13,23 @@ namespace InventarioApp
 {
     public partial class ProductosForm : Form
     {
-        public ProductosForm()
+        private string tipoUsuario;
+        public ProductosForm(string tipo)
         {
             InitializeComponent();
+            tipoUsuario = tipo;
             CargarProductos();
+            AplicarPermisos();
+        }
+
+        private void AplicarPermisos()
+        {
+            if (tipoUsuario == "usuario")
+            {
+                btnAgregar.Enabled = false;
+                btnEditar.Enabled = false;
+                btnEliminar.Enabled = false;
+            }
         }
 
         private void CargarProductos()

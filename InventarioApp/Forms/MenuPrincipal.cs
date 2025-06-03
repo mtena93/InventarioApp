@@ -13,9 +13,22 @@ namespace InventarioApp
 {
     public partial class MenuPrincipal : Form
     {
-        public MenuPrincipal()
+        private string tipoUsuario;
+        public MenuPrincipal(string tipo)
         {
             InitializeComponent();
+            tipoUsuario = tipo;
+            AplicarPermisos();
+        }
+
+        private void AplicarPermisos()
+        {
+            if (tipoUsuario == "usuario")
+            {
+                
+            }
+
+            this.Text += $" - Rol: {tipoUsuario}";
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -25,19 +38,19 @@ namespace InventarioApp
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            ProductosForm productosForm = new ProductosForm();
+            ProductosForm productosForm = new ProductosForm(tipoUsuario);
             productosForm.ShowDialog(); // para que se abra como ventana modal
         }
 
         private void btnStock_Click(object sender, EventArgs e)
         {
-            MovimientosForm form = new MovimientosForm();
+            MovimientosForm form = new MovimientosForm(tipoUsuario);
             form.ShowDialog();
         }
 
         private void btnCategorias_Click(object sender, EventArgs e)
         {
-            CategoriasForm form = new CategoriasForm();
+            CategoriasForm form = new CategoriasForm(tipoUsuario);
             form.ShowDialog();
         }
     }

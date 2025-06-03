@@ -18,10 +18,6 @@ namespace InventarioApp
             InitializeComponent();
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -49,10 +45,10 @@ namespace InventarioApp
 
                 if (reader.Read())
                 {
-                    MessageBox.Show("¡Login correcto!");
-                    // Aquí puedes abrir el formulario principal:
+                    string tipoUsuario = reader["tipo"].ToString();
+
                     this.Hide();
-                    MenuPrincipal menu = new MenuPrincipal();
+                    MenuPrincipal menu = new MenuPrincipal(tipoUsuario); // 👉 le pasamos el tipo
                     menu.Show();
                 }
                 else

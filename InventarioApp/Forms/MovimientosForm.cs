@@ -13,13 +13,28 @@ namespace InventarioApp.Forms
 {
     public partial class MovimientosForm : Form
     {
-        public MovimientosForm()
+        private string tipoUsuario;
+        public MovimientosForm(string tipo)
         {
             InitializeComponent();
+            tipoUsuario = tipo;
             CargarProductos();
-            cmbTipo.Items.AddRange(new string[] { "entrada", "salida" });
+            cmbTipo.Items.AddRange(new string[] { "Entrada", "Salida" });
             cmbTipo.SelectedIndex = 0;
             CargarHistorial();
+            AplicarPermisos();
+        }
+
+
+        private void AplicarPermisos()
+        {
+            if (tipoUsuario == "usuario")
+            {
+                cmbProducto.Enabled = false;
+                btnRegistrar.Enabled = false;
+                cmbTipo.Enabled = false;
+                txtCantidad.Enabled = false;
+            }
         }
 
         private void CargarProductos()
