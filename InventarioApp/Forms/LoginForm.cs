@@ -50,7 +50,7 @@ namespace InventarioApp
                     string tipoUsuario = reader["tipo"].ToString();
 
                     this.Hide();
-                    MenuPrincipal menu = new MenuPrincipal(tipoUsuario); // 👉 le pasamos el tipo
+                    MenuPrincipal menu = new MenuPrincipal(tipoUsuario); //le pasamos el tipo
                     menu.Show();
                 }
                 else

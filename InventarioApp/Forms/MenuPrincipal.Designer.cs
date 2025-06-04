@@ -40,17 +40,21 @@
             // lblBienvenida
             // 
             this.lblBienvenida.AutoSize = true;
-            this.lblBienvenida.Location = new System.Drawing.Point(326, 31);
+            this.lblBienvenida.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBienvenida.Location = new System.Drawing.Point(402, 57);
+            this.lblBienvenida.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBienvenida.Name = "lblBienvenida";
-            this.lblBienvenida.Size = new System.Drawing.Size(115, 13);
+            this.lblBienvenida.Size = new System.Drawing.Size(382, 37);
             this.lblBienvenida.TabIndex = 0;
-            this.lblBienvenida.Text = "¡Bienvenido al sistema!";
+            this.lblBienvenida.Text = "¡Bienvenido a tu Empresa";
             // 
             // btnProductos
             // 
-            this.btnProductos.Location = new System.Drawing.Point(308, 79);
+            this.btnProductos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProductos.Location = new System.Drawing.Point(470, 183);
+            this.btnProductos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnProductos.Name = "btnProductos";
-            this.btnProductos.Size = new System.Drawing.Size(150, 23);
+            this.btnProductos.Size = new System.Drawing.Size(274, 60);
             this.btnProductos.TabIndex = 1;
             this.btnProductos.Text = "Gestionar Productos";
             this.btnProductos.UseVisualStyleBackColor = true;
@@ -58,9 +62,11 @@
             // 
             // btnCategorias
             // 
-            this.btnCategorias.Location = new System.Drawing.Point(308, 120);
+            this.btnCategorias.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCategorias.Location = new System.Drawing.Point(470, 253);
+            this.btnCategorias.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCategorias.Name = "btnCategorias";
-            this.btnCategorias.Size = new System.Drawing.Size(150, 23);
+            this.btnCategorias.Size = new System.Drawing.Size(274, 60);
             this.btnCategorias.TabIndex = 2;
             this.btnCategorias.Text = "Gestionar Categorias";
             this.btnCategorias.UseVisualStyleBackColor = true;
@@ -68,9 +74,11 @@
             // 
             // btnStock
             // 
-            this.btnStock.Location = new System.Drawing.Point(308, 160);
+            this.btnStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStock.Location = new System.Drawing.Point(470, 322);
+            this.btnStock.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStock.Name = "btnStock";
-            this.btnStock.Size = new System.Drawing.Size(150, 23);
+            this.btnStock.Size = new System.Drawing.Size(274, 60);
             this.btnStock.TabIndex = 3;
             this.btnStock.Text = "Movimientos de Stock";
             this.btnStock.UseVisualStyleBackColor = true;
@@ -79,20 +87,23 @@
             // btnSalir
             // 
             this.btnSalir.BackColor = System.Drawing.Color.Red;
-            this.btnSalir.Location = new System.Drawing.Point(346, 236);
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.Location = new System.Drawing.Point(881, 579);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(75, 23);
+            this.btnSalir.Size = new System.Drawing.Size(274, 60);
             this.btnSalir.TabIndex = 4;
-            this.btnSalir.Text = "Salir";
+            this.btnSalir.Text = "SALIR";
             this.btnSalir.UseVisualStyleBackColor = false;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // btnCrearUsuario
             // 
             this.btnCrearUsuario.BackColor = System.Drawing.Color.Lime;
-            this.btnCrearUsuario.Location = new System.Drawing.Point(37, 31);
+            this.btnCrearUsuario.Location = new System.Drawing.Point(29, 183);
+            this.btnCrearUsuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCrearUsuario.Name = "btnCrearUsuario";
-            this.btnCrearUsuario.Size = new System.Drawing.Size(104, 23);
+            this.btnCrearUsuario.Size = new System.Drawing.Size(156, 35);
             this.btnCrearUsuario.TabIndex = 5;
             this.btnCrearUsuario.Text = "Crear Usuario";
             this.btnCrearUsuario.UseVisualStyleBackColor = false;
@@ -100,9 +111,11 @@
             // 
             // btnHistorialProductos
             // 
-            this.btnHistorialProductos.Location = new System.Drawing.Point(308, 196);
+            this.btnHistorialProductos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialProductos.Location = new System.Drawing.Point(470, 391);
+            this.btnHistorialProductos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnHistorialProductos.Name = "btnHistorialProductos";
-            this.btnHistorialProductos.Size = new System.Drawing.Size(150, 23);
+            this.btnHistorialProductos.Size = new System.Drawing.Size(274, 60);
             this.btnHistorialProductos.TabIndex = 6;
             this.btnHistorialProductos.Text = "Historial Productos";
             this.btnHistorialProductos.UseVisualStyleBackColor = true;
@@ -110,9 +123,9 @@
             // 
             // MenuPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1200, 692);
             this.Controls.Add(this.btnHistorialProductos);
             this.Controls.Add(this.btnCrearUsuario);
             this.Controls.Add(this.btnSalir);
@@ -120,6 +133,8 @@
             this.Controls.Add(this.btnCategorias);
             this.Controls.Add(this.btnProductos);
             this.Controls.Add(this.lblBienvenida);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MenuPrincipal";
             this.Text = "MenuPrincipal";
             this.ResumeLayout(false);
