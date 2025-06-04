@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
+
 
 namespace InventarioApp.Forms
 {
@@ -27,7 +29,8 @@ namespace InventarioApp.Forms
             cmbFiltroProducto.SelectedIndexChanged += (s, e) => AplicarFiltro();
             cmbFiltroTipo.SelectedIndexChanged += (s, e) => AplicarFiltro();
             txtFiltroCantidad.TextChanged += (s, e) => AplicarFiltro();
-            txtFiltroFecha.TextChanged += (s, e) => AplicarFiltro();
+            dateDesde.ValueChanged += (s, e) => AplicarFiltro();
+            dateHasta.ValueChanged += (s, e) => AplicarFiltro();
         }
 
 
@@ -86,6 +89,9 @@ namespace InventarioApp.Forms
             {
                 MessageBox.Show("Error al cargar historial: " + ex.Message);
             }
+
+            lblTotalFiltrado.Text = $"Resultados: {movimientosData.Rows.Count} de {movimientosData.Rows.Count}";
+
         }
 
 
@@ -104,13 +110,17 @@ namespace InventarioApp.Forms
             if (!string.IsNullOrWhiteSpace(txtFiltroCantidad.Text))
                 filtro += $"CONVERT(cantidad, 'System.String') LIKE '%{txtFiltroCantidad.Text}%' AND ";
 
-            if (!string.IsNullOrWhiteSpace(txtFiltroFecha.Text))
-                filtro += $"CONVERT(fecha, 'System.String') LIKE '%{txtFiltroFecha.Text}%' AND ";
+            DateTime desde = dateDesde.Value.Date;
+            DateTime hasta = dateHasta.Value.Date.AddDays(1).AddTicks(-1); // fin del día
+
+            filtro += $"fecha >= #{desde:yyyy-MM-dd}# AND fecha <= #{hasta:yyyy-MM-dd}# AND ";
 
             if (filtro.EndsWith(" AND "))
                 filtro = filtro.Substring(0, filtro.Length - 5);
 
             movimientosData.DefaultView.RowFilter = filtro;
+            lblTotalFiltrado.Text = $"Resultados: {movimientosData.DefaultView.Count} de {movimientosData.Rows.Count}";
+
         }
 
         private void LlenarFiltros()
@@ -214,6 +224,57 @@ namespace InventarioApp.Forms
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close(); // Vuelve al formulario anterior
+        }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            if (movimientosData == null || movimientosData.DefaultView.Count == 0)
+            {
+                MessageBox.Show("No hay datos para exportar.");
+                return;
+            }
+
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "Excel Files (*.xlsx)|*.xlsx",
+                FileName = "MovimientosExportados.xlsx"
+            };
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var wb = new XLWorkbook();
+                    var ws = wb.Worksheets.Add("Movimientos");
+
+                    // Convertir DataView filtrado a DataTable
+                    DataView dv = movimientosData.DefaultView;
+                    DataTable dtFiltrado = dv.ToTable(false);
+
+                    // Agregar encabezados
+                    for (int i = 0; i < dtFiltrado.Columns.Count; i++)
+                    {
+                        ws.Cell(1, i + 1).Value = dtFiltrado.Columns[i].ColumnName;
+                    }
+
+                    // Agregar filas
+                    for (int i = 0; i < dtFiltrado.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dtFiltrado.Columns.Count; j++)
+                        {
+                            var valor = dtFiltrado.Rows[i][j];
+                            ws.Cell(i + 2, j + 1).Value = valor != DBNull.Value ? valor.ToString() : "";
+                        }
+                    }
+
+                    wb.SaveAs(sfd.FileName);
+                    MessageBox.Show("Exportación completada con éxito.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al exportar: " + ex.Message);
+                }
+            }
         }
     }
    }

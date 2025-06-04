@@ -8,86 +8,7 @@ namespace InventarioApp
     partial class ProductoDetalleForm : Form
     {
     
-        private int? productoId = null; // null = agregar, no null = editar
-
-        public ProductoDetalleForm(int? id = null)
-        {
-            InitializeComponent();
-            productoId = id;
-            CargarCategorias();
-
-            if (productoId.HasValue)
-            {
-                CargarDatosProducto();
-                this.Text = "Editar Producto";
-            }
-            else
-            {
-                this.Text = "Agregar Producto";
-            }
-        }
-
-        private void CargarCategorias()
-        {
-            Conexion con = new Conexion();
-            try
-            {
-                MySqlConnection conexion = con.Abrir();
-
-                string query = "SELECT id, nombre FROM categorias";
-                MySqlDataAdapter da = new MySqlDataAdapter(query, conexion);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                cmbCategoria.DataSource = dt;
-                cmbCategoria.DisplayMember = "nombre";
-                cmbCategoria.ValueMember = "id";
-
-                if (dt.Rows.Count > 0)
-                    cmbCategoria.SelectedIndex = 0;
-
-                con.Cerrar();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar categorías: " + ex.Message);
-            }
-        }
-
-
-
-        private void CargarDatosProducto()
-        {
-            Conexion con = new Conexion();
-            try
-            {
-                con.Abrir();
-                string query = "SELECT * FROM productos WHERE id = @id";
-                MySqlCommand cmd = new MySqlCommand(query, con.Abrir());
-                cmd.Parameters.AddWithValue("@id", productoId);
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    txtNombre.Text = reader["nombre"].ToString();
-                    txtDescripcion.Text = reader["descripcion"].ToString();
-                    txtPrecio.Text = reader["precio"].ToString();
-                    txtCantidad.Text = reader["cantidad"].ToString();
-                    cmbCategoria.SelectedValue = reader["categoria_id"];
-                }
-
-                con.Cerrar();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar el producto: " + ex.Message);
-            }
         
-        }
-
-
-
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -108,6 +29,10 @@ namespace InventarioApp
             this.cmbCategoria = new System.Windows.Forms.ComboBox();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.lblMargen = new System.Windows.Forms.Label();
+            this.txtMargen = new System.Windows.Forms.TextBox();
+            this.lblPrecioFinal = new System.Windows.Forms.Label();
+            this.txtPrecioFinal = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblNombre
@@ -162,7 +87,7 @@ namespace InventarioApp
             // lblCantidad
             // 
             this.lblCantidad.AutoSize = true;
-            this.lblCantidad.Location = new System.Drawing.Point(252, 237);
+            this.lblCantidad.Location = new System.Drawing.Point(251, 267);
             this.lblCantidad.Name = "lblCantidad";
             this.lblCantidad.Size = new System.Drawing.Size(52, 13);
             this.lblCantidad.TabIndex = 6;
@@ -170,7 +95,7 @@ namespace InventarioApp
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(310, 234);
+            this.txtCantidad.Location = new System.Drawing.Point(309, 264);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(76, 20);
             this.txtCantidad.TabIndex = 7;
@@ -178,7 +103,7 @@ namespace InventarioApp
             // lblCategoria
             // 
             this.lblCategoria.AutoSize = true;
-            this.lblCategoria.Location = new System.Drawing.Point(105, 278);
+            this.lblCategoria.Location = new System.Drawing.Point(105, 300);
             this.lblCategoria.Name = "lblCategoria";
             this.lblCategoria.Size = new System.Drawing.Size(55, 13);
             this.lblCategoria.TabIndex = 8;
@@ -187,7 +112,7 @@ namespace InventarioApp
             // cmbCategoria
             // 
             this.cmbCategoria.FormattingEnabled = true;
-            this.cmbCategoria.Location = new System.Drawing.Point(177, 275);
+            this.cmbCategoria.Location = new System.Drawing.Point(177, 297);
             this.cmbCategoria.Name = "cmbCategoria";
             this.cmbCategoria.Size = new System.Drawing.Size(209, 21);
             this.cmbCategoria.TabIndex = 9;
@@ -195,7 +120,7 @@ namespace InventarioApp
             // btnGuardar
             // 
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnGuardar.Location = new System.Drawing.Point(177, 312);
+            this.btnGuardar.Location = new System.Drawing.Point(177, 334);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 10;
@@ -206,7 +131,7 @@ namespace InventarioApp
             // btnCancelar
             // 
             this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnCancelar.Location = new System.Drawing.Point(310, 312);
+            this.btnCancelar.Location = new System.Drawing.Point(310, 334);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 11;
@@ -214,11 +139,48 @@ namespace InventarioApp
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // lblMargen
+            // 
+            this.lblMargen.AutoSize = true;
+            this.lblMargen.Location = new System.Drawing.Point(243, 237);
+            this.lblMargen.Name = "lblMargen";
+            this.lblMargen.Size = new System.Drawing.Size(104, 13);
+            this.lblMargen.TabIndex = 12;
+            this.lblMargen.Text = "% Margen Beneficio:";
+            // 
+            // txtMargen
+            // 
+            this.txtMargen.Location = new System.Drawing.Point(345, 234);
+            this.txtMargen.Name = "txtMargen";
+            this.txtMargen.Size = new System.Drawing.Size(41, 20);
+            this.txtMargen.TabIndex = 13;
+            // 
+            // lblPrecioFinal
+            // 
+            this.lblPrecioFinal.AutoSize = true;
+            this.lblPrecioFinal.Location = new System.Drawing.Point(105, 267);
+            this.lblPrecioFinal.Name = "lblPrecioFinal";
+            this.lblPrecioFinal.Size = new System.Drawing.Size(65, 13);
+            this.lblPrecioFinal.TabIndex = 14;
+            this.lblPrecioFinal.Text = "Precio Final:";
+            // 
+            // txtPrecioFinal
+            // 
+            this.txtPrecioFinal.Location = new System.Drawing.Point(177, 264);
+            this.txtPrecioFinal.Name = "txtPrecioFinal";
+            this.txtPrecioFinal.ReadOnly = true;
+            this.txtPrecioFinal.Size = new System.Drawing.Size(60, 20);
+            this.txtPrecioFinal.TabIndex = 15;
+            // 
             // ProductoDetalleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtPrecioFinal);
+            this.Controls.Add(this.lblPrecioFinal);
+            this.Controls.Add(this.txtMargen);
+            this.Controls.Add(this.lblMargen);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.cmbCategoria);
@@ -252,5 +214,9 @@ namespace InventarioApp
         private System.Windows.Forms.ComboBox cmbCategoria;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCancelar;
+        private Label lblMargen;
+        private TextBox txtMargen;
+        private Label lblPrecioFinal;
+        private TextBox txtPrecioFinal;
     }
 }

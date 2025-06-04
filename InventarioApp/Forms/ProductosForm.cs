@@ -39,13 +39,14 @@ namespace InventarioApp
             try
             {
                 con.Abrir();
-                string query = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.cantidad, c.nombre AS categoria FROM productos p LEFT JOIN categorias c ON p.categoria_id = c.id";
+                string query = "SELECT p.id, p.nombre, p.descripcion, p.precio, p.margen_porcentaje, p.precio_final, p.cantidad, c.nombre AS categoria FROM productos p LEFT JOIN categorias c ON p.categoria_id = c.id";
                 MySqlDataAdapter da = new MySqlDataAdapter(query, con.Abrir());
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dgvProductos.DataSource = dt;
                 dgvProductos.Columns["id"].Visible = false;
                 dgvProductos.Columns["precio"].DefaultCellStyle.Format = "0.00 €";
+                dgvProductos.Columns["precio_final"].DefaultCellStyle.Format = "0.00 €";
                 dgvProductos.Columns["nombre"].DefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold); // Nombre en negrita
                 con.Cerrar();
             }
