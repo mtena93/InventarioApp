@@ -26,6 +26,7 @@ namespace InventarioApp
             if (tipoUsuario == "usuario")
             {
                 btnCrearUsuario.Visible = false;
+                btnHistorialProductos.Visible = false;
             }
 
             this.Text += $" - Rol: {tipoUsuario}";
@@ -58,6 +59,12 @@ namespace InventarioApp
         {
             CrearUsuarioForm form = new CrearUsuarioForm();
             form.ShowDialog();
+        }
+
+        private void btnHistorialProductos_Click(object sender, EventArgs e)
+        {
+            HistorialProductosForm form = new HistorialProductosForm();
+            form.ShowDialog(); // Modal
         }
     }
 }

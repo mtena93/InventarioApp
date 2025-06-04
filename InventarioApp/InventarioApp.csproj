@@ -136,6 +136,12 @@
     <Compile Include="Forms\CrearUsuarioForm.Designer.cs">
       <DependentUpon>CrearUsuarioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\HistorialProductosForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HistorialProductosForm.Designer.cs">
+      <DependentUpon>HistorialProductosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CrearUsuarioForm.resx">
       <DependentUpon>CrearUsuarioForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HistorialProductosForm.resx">
+      <DependentUpon>HistorialProductosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

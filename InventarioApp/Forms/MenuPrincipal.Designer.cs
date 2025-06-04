@@ -34,6 +34,7 @@
             this.btnStock = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnCrearUsuario = new System.Windows.Forms.Button();
+            this.btnHistorialProductos = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblBienvenida
@@ -78,7 +79,7 @@
             // btnSalir
             // 
             this.btnSalir.BackColor = System.Drawing.Color.Red;
-            this.btnSalir.Location = new System.Drawing.Point(343, 202);
+            this.btnSalir.Location = new System.Drawing.Point(346, 236);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 23);
             this.btnSalir.TabIndex = 4;
@@ -97,11 +98,22 @@
             this.btnCrearUsuario.UseVisualStyleBackColor = false;
             this.btnCrearUsuario.Click += new System.EventHandler(this.btnCrearUsuario_Click);
             // 
+            // btnHistorialProductos
+            // 
+            this.btnHistorialProductos.Location = new System.Drawing.Point(308, 196);
+            this.btnHistorialProductos.Name = "btnHistorialProductos";
+            this.btnHistorialProductos.Size = new System.Drawing.Size(150, 23);
+            this.btnHistorialProductos.TabIndex = 6;
+            this.btnHistorialProductos.Text = "Historial Productos";
+            this.btnHistorialProductos.UseVisualStyleBackColor = true;
+            this.btnHistorialProductos.Click += new System.EventHandler(this.btnHistorialProductos_Click);
+            // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnHistorialProductos);
             this.Controls.Add(this.btnCrearUsuario);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnStock);
@@ -123,5 +135,6 @@
         private System.Windows.Forms.Button btnStock;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnCrearUsuario;
+        private System.Windows.Forms.Button btnHistorialProductos;
     }
 }

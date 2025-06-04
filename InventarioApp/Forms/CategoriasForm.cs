@@ -43,6 +43,8 @@ namespace InventarioApp.Forms
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dgvCategorias.DataSource = dt;
+                dgvCategorias.Columns["nombre"].HeaderText = "Nombre Categoría";
+                dgvCategorias.Columns["id"].Visible = false;
                 con.Cerrar();
             }
             catch (Exception ex)

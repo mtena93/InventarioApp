@@ -81,6 +81,11 @@ namespace InventarioApp.Forms
                 movimientosData = new DataTable(); // 👈 global
                 da.Fill(movimientosData);
                 dgvMovimientos.DataSource = movimientosData;
+                dgvMovimientos.Columns["id"].HeaderText = "ID";
+                dgvMovimientos.Columns["producto"].HeaderText = "Producto";
+                dgvMovimientos.Columns["tipo"].HeaderText = "Tipo";
+                dgvMovimientos.Columns["cantidad"].HeaderText = "Cantidad";
+                dgvMovimientos.Columns["fecha"].HeaderText = "Fecha";
                 LlenarFiltros();
 
                 con.Cerrar();

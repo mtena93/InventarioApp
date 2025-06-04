@@ -44,8 +44,18 @@ namespace InventarioApp
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dgvProductos.DataSource = dt;
+                //Nombres columnas
+                dgvProductos.Columns["nombre"].HeaderText = "Nombre del producto";
+                dgvProductos.Columns["descripcion"].HeaderText = "Descripción";
+                dgvProductos.Columns["precio"].HeaderText = "Precio de costo";
+                dgvProductos.Columns["margen_porcentaje"].HeaderText = "Margen aplicado";
+                dgvProductos.Columns["precio_final"].HeaderText = "Precio final";
+                dgvProductos.Columns["cantidad"].HeaderText = "Stock";
+                dgvProductos.Columns["categoria"].HeaderText = "Categoría";
+                //Visibilidad y formato de las columnas
                 dgvProductos.Columns["id"].Visible = false;
                 dgvProductos.Columns["precio"].DefaultCellStyle.Format = "0.00 €";
+                dgvProductos.Columns["margen_porcentaje"].DefaultCellStyle.Format = "0.00'%'";
                 dgvProductos.Columns["precio_final"].DefaultCellStyle.Format = "0.00 €";
                 dgvProductos.Columns["nombre"].DefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold); // Nombre en negrita
                 con.Cerrar();
